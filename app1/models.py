@@ -31,6 +31,13 @@ class ShiftLogger(models.Model):
     last_name = models.CharField(max_length = 100)
     time_log = models.TimeField(help_text = "Enter the exact time!")
 
+class Menu(models.Model):
+    name = models.CharField(max_length=200)
+    price = models.IntegerField()
+
+    def __str__(self):
+        return self.name
+
 
 
 
