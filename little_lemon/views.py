@@ -9,4 +9,4 @@ from django.http import HttpResponse
 #def handler500
 
 def handler404(request, exception):
-    return HttpResponse('<h4>404 ya lunkhead!</h4>')
+    return HttpResponse('<h4>custom 404</h4>')

@@ -7,18 +7,31 @@ from app1.models import Menu
 
 
 def home(request):
-    my_name = "Colin"
-    return HttpResponse(f"<h1>Welcome to Little Lemon!</h1>")
+    return render(request, 'app1/home.html')
 
 def about(request):
     return render(request, 'about.html')
+
+def book(request):
+    form = BookingForm()
+    if request.method == 'POST':
+        form = BookingForm(request.POST)
+        if form.is_valid():
+            form.save()
+    context = {'form':form}
+    return render(request, 'app1/book.html', context)
 
 def menu(request):
     items = {'menu' : Menu.objects.all()}
     return render(request, 'app1/menu.html', items)
 
-def book(request):
-    return HttpResponse(f"<h1>Book page</h1>")
+def display_menu_item(request, pk=None):
+    if pk:
+        menu_item = Menu.objects.get(pk=pk)
+    else:
+        menu_item = ""
+    return render(request, 'app1/menu_item.html', {'menu_item' :menu_item})
+
 
 def form_view(request):
     form = ShiftLoggerForm()
@@ -41,13 +54,3 @@ def booking_form_view(request):
     context = {"form" : form}
     return render(request, "app1/booking.html", context)
 
-def drinks(request, drink_name):
-    drink = {
-        'mocha' : 'type of coffee',
-        'tea' : 'type of beverage',
-        'lemonade' : 'type of refreshment',
-    }
-
-    choice_of_drink = drink[drink_name]
-
-    return HttpResponse(f"<h2> {choice_of_drink} </h2>")
